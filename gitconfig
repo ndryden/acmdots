@@ -42,6 +42,10 @@
 	editor = "emacs"
 [push]
 	default = matching
+[include]
+	# Add private configurations (eg github tokens) to the .gitprivate file
+	# This requires (at minimum) git 1.7.10
+	path = .gitprivate
 [user]
 	name = Nikoli Dryden
 	email = ndryden@xenosgame.com
