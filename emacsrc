@@ -58,8 +58,8 @@
 ;; C Styling
 (setq c-default-style "bsd"
 	  c-basic-offset 4)
-(add-hook 'c-mode-common-hook '(lambda ()
-								 (c-toggle-auto-state 1)))
+;(add-hook 'c-mode-common-hook '(lambda ()
+;								 (c-toggle-auto-state 1)))
 
 ;; Turn on generic syntax highlighting
 (desire 'generic-x "generic-x.el")
@@ -137,7 +137,9 @@
 	; We can use emacs24 color themes
 	(progn
 	  (push "~/.emacsdir/themes/" custom-theme-load-path)
-	  (load-theme 'wombat-twilight t))
+	  (push "~/.emacsdir/themes/emacs-color-theme-solarized/" custom-theme-load-path)
+	  (load-theme 'solarized-dark t))
+	  ;(load-theme 'wombat-twilight t))
   ; We can't use modern themes, try to use color-theme package
   (progn
 	(message "Emacs24 themes unavailable, falling back to color-theme.el")
@@ -173,9 +175,22 @@
 		  (define-key global-map "\C-cc" 'org-capture)
 		  (setq org-capture-templates
 		   '(("t" "Todo" entry (file+headline "~/org/newgtd.org" "Tasks")
-			  "* TODO %^{Brief description} %^g\n%?\nAdded %U")
+			  "* TODO %^{Brief description} %^g\n%?Added %U")
 			 ("j" "Journal" entry (file+datetree "~/org/journal.org")
-			  "* %?\nEntered on %U\n %i\n")))
+			  "* %?\nEntered on %U\n %i\n")
+			 ("r" "Reading" entry (file+headline "~/org/newgtd.org" "Reading")
+			  "* TODO Read %^{Title} by %^{Author} %^g\n%?Added %U")))
+		  (setq org-agenda-custom-commands
+		   '(("H" "All To Do Lists"
+			  ((agenda "")
+			   (tags-todo "OFFICE")
+			   (tags-todo "HOME")
+			   (tags-todo "SCHOOL")
+			   (tags-todo "COMPUTER")
+			   (tags-todo "PROJECT")
+			   (tags-todo "READING")))
+			 ("P" "Projects"
+			  ((tags "PROJECT")))))
 		  (setq org-log-done t)
 		  (setq org-use-fast-todo-selection t)
 		  (setq org-agenda-include-diary t)
@@ -184,7 +199,8 @@
 									 ("someday.org" :level . 2)))
 		  (setq org-agenda-files
 		   ; Add agendas to this list
-		   (list "~/org/"))))
+		   (list "~/org/"))
+		  (setq org-extend-today-until 4)))
 
 ;; Haskell-Mode
 (desire 'haskell-mode "haskell-mode.el"
