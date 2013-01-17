@@ -26,6 +26,13 @@ case "${TERM}" in
 		;;
 esac
 
-PROMPT=${RESETCOLOR}${HOSTCOLOR}$'%n@%m'${BLACKCOLOR}':'${PATHCOLOR}$'%45<...<%~ %(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
+local host
+if [ "${TERM_PROGRAM}" = "Apple_Terminal" ]; then
+    host=`networksetup -getcomputername`
+else
+	host="%m"
+fi
 
-RPROMPT=${RESETCOLOR}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
+PROMPT=${RESETCOLOR}${HOSTCOLOR}$'%n@'${host}${BLACKCOLOR}':'${PATHCOLOR}$'%45<...<%~ %(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
+
+#RPROMPT=${RESETCOLOR}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}

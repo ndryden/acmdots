@@ -3,7 +3,11 @@ precmd()
 {
 	local termtitle
 
-	termtitle=`print -P "%n@${HOST}[%l]"`
+	if [ "${TERM_PROGRAM}" = "Apple_Terminal" ]; then
+	    termtitle=`print -P "%n@$(networksetup -getcomputername)[%l]"`
+	else
+		termtitle=`print -P "%n@${HOST}[%l]"`
+	fi
 	title zsh "$termtitle"
 }
 
@@ -15,7 +19,11 @@ preexec()
 	local termtitle
 
 	# Prepend this string to the title.
-	termtitle=`print -P "%n@${HOST}[%l]:"`
+	if [ "${TERM_PROGRAM}" = "Apple_Terminal" ]; then
+	    termtitle=`print -P "%n@$(networksetup -getcomputername)[%l]"`
+	else
+		termtitle=`print -P "%n@${HOST}[%l]"`
+	fi
 
 	case $cmd[1] in
 		fg)
