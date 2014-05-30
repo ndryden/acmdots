@@ -16,6 +16,8 @@ fi
 autoload -U edit-command-line
 zle -N edit-command-line
 
+stty -ixon
+
 # Keep track of other people accessing the box
 watch=( all )
 export LOGCHECK=30
